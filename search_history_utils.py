@@ -5,6 +5,8 @@ from datetime import datetime
 def add_search_history(search_keyword):
     con = db_connect()
     cur = con.cursor()
+
+    # This query will update the timestamp with latest time for same query getting again and again
     product_sql = "insert or replace into search_history (ID, search_key) values ((select ID from search_history where search_key = ?), ?);"
     cur.execute(product_sql, (search_keyword, search_keyword))
     con.commit()
